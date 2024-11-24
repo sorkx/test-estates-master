@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IEstate, IFilterParams } from '@/services/estates/estateApi'
+import type { IEstate } from '@/services/estates/estateApi'
 import VButton from '@/components/UI/VButton/VButton.vue'
 import HighlightText from '@/components/HighlightText/HighlightText.vue'
 import VInput from '@/components/UI/VInput/VInput.vue'
@@ -9,13 +9,13 @@ interface IColumn {
 	label: string	
 }
 
-interface IProps {
+interface IPropsList {
 	estates: IEstate[]
 	searchQuery: string
 	active: string
 }
 
-const props = defineProps<IProps>()
+const { estates, searchQuery, active } = defineProps<IPropsList>()
 
 const columns: IColumn[] = [{
 	key: 'address',
@@ -33,16 +33,13 @@ const columns: IColumn[] = [{
 
 const searchModelValue = defineModel<string>('searchQuery', { default: '' })
 
-const emit = defineEmits<{
-	'filter': [IFilterParams],
-	'clear-filter': []
-}>()
+const emit = defineEmits(['filter','clear-filter'])
 
-const handleCityFilter = (city: string) => {
+const handleCityFilter = (city: string): void => {
 	emit('filter', { city })
 }
 
-const clearFilter = () => {
+const clearFilter = (): void => {
 	emit('clear-filter')
 }
 
@@ -73,7 +70,7 @@ const getEstateType = (type: string): string => {
 		<VButton
 			@click="clearFilter"
 			modificator="clear-filter"
-			:disabled="!props.active"
+			:disabled="!active"
 		>
 			Очистить фильтры
 		</VButton>
@@ -90,15 +87,15 @@ const getEstateType = (type: string): string => {
 			</tr>
 		</thead>
 		<tbody>
-			<template v-if="props.estates.length">
+			<template v-if="estates.length">
 				<tr 
-					v-for="estate in props.estates" 
+					v-for="estate in estates" 
 					:key="estate.id"
 				>
 					<td>
 						<HighlightText
 							:text="estate.address"
-							:search-query="props.searchQuery"
+							:search-query="searchQuery"
 						/>
 					</td>
 					<td class="td">
@@ -106,7 +103,7 @@ const getEstateType = (type: string): string => {
 						<VButton 
 							modificator="filter"
 							@click="handleCityFilter(estate.city)"
-							:disabled="props.active === estate.city"
+							:disabled="active === estate.city"
 						>
 							⚙️
 						</VButton>

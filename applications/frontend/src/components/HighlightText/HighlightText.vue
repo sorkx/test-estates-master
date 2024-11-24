@@ -1,21 +1,23 @@
 <script setup lang="ts">
-interface Props {
+import { computed } from 'vue'
+
+interface IPropsText {
 	text: string
 	searchQuery: string
 }
 
-const props = defineProps<Props>()
+const { text, searchQuery: query } = defineProps<IPropsText>()
 
-const highlightText = (text: string, query: string) => {
+const highlightText = computed(() => {
   if (!query) return text
   
   const regex = new RegExp((`${query}`), 'gi')
   return text.replace(regex, `<span class="highlight">${query}</span>`)
-}
+})
 </script>
 
 <template>
-	<span v-html="highlightText(props.text, props.searchQuery)" />
+	<span v-html="highlightText" />
 </template>
 
 <style src="./styles.scss" lang="scss" scoped />

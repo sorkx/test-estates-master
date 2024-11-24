@@ -4,32 +4,52 @@ import { storeToRefs } from 'pinia'
 import { useEstateStore } from '@/configs/stores/estatesStore'
 import EstatesList from '../EstatesList/EstatesList.vue'
 
-const estateStore = useEstateStore()
+interface IApplyFilter {
+	city?: string
+	search?: string
+}
 
-const activeCity = ref<string>('')
-const searchQuery = ref<string>('')
+const estateStore = useEstateStore()
 
 const { 
 	estates 
 } = storeToRefs(estateStore)
 
-const searchEstates = async () => {
+const activeCity = ref<string>('')
+const searchQuery = ref<string>('')
+
+const applyFilters = async () => {
+	const filters: IApplyFilter = {}
+
 	if (searchQuery.value) {
-		activeCity.value = ''
+		filters.search = searchQuery.value
 	}
 
-	await estateStore.getEstates({ search: searchQuery.value })
+	if (activeCity.value) {
+		filters.city = activeCity.value
+	}
+
+	await estateStore.getEstates(filters)
+}
+
+const searchEstates = async () => {
+	if (searchQuery.value) {
+    	activeCity.value = ''
+  	}
+
+	await applyFilters()
 }
 
 const handleFilter = async (filter: { city?: string }) => {
+	activeCity.value = filter.city || ''
 	searchQuery.value = ''
-	activeCity.value = filter.city
-	await estateStore.getEstates({ city: filter.city })
+	await applyFilters()
 }
 
 const handleClearFilter = async () => {
 	activeCity.value = ''
 	searchQuery.value = ''
+
 	await estateStore.getEstates()
 }
 

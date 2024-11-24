@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-const props = defineProps<{
+interface IPropsButton {
 	modificator: string
-}>()
+}
+
+const {  modificator } = defineProps<IPropsButton>()
 
 const modificatorClasses = computed(() => {
-    return props.modificator.split(' ').map(mod => `v-button--${mod}`);
+    return modificator.split(' ').map(mod => `v-button--${mod}`)
 })
 </script>
 
