@@ -1,0 +1,15 @@
+.estates-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	h1 {
+		font-size: 32px;
+		line-height: 30px;
+		margin-bottom: 20px;
+	}
+}
+
+.active-city {
+	font-weight: bold;
+}

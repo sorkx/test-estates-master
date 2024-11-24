@@ -1,0 +1,13 @@
+:deep(.highlight) {
+	background-color: yellow;
+	animation: highlight-fade-in 0.3s ease-in-out;
+}
+
+@keyframes highlight-fade-in {
+	from {
+		background-color: transparent;
+	}
+	to {
+		background-color: yellow;
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+		"lib": ["esnext", "dom"],
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"]
+		},
+	},
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.d.ts",
+		"src/**/*.vue",
+		"src/services/**/*.ts"
+	],
+	"files": [],
+	"references": [
+		{
+			"path": "./tsconfig.node.json"
+		}
+	]
+}
