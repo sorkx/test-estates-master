@@ -14,7 +14,7 @@ export const useEstateStore = defineStore('estates', () => {
 			const response = await api.estates.estatesList(filters)
 
 			estates.value = response.data
-		} catch (error) {
+		} catch (error: unknown) {
 			console.error(error)
 		}
 	}

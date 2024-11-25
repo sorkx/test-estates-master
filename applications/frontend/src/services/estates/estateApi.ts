@@ -288,6 +288,7 @@ export class EstatesApi<
      * @summary Получить список объектов недвижимости
      * @request GET:/estates
      * @response `200` `(IEstate)[]` Успешный ответ
+     * @response `400` `void` Неверный запрос
      */
     estatesList: (
       query?: {
@@ -300,7 +301,7 @@ export class EstatesApi<
       },
       params: RequestParams = {}
     ) =>
-      this.request<IEstate[], any>({
+      this.request<IEstate[], void>({
         path: `/estates`,
         method: 'GET',
         query: query,

@@ -81,3 +81,5 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Estate'
+        '400':
+          description: Неверный запрос
